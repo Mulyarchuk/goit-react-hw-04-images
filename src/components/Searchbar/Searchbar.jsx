@@ -22,7 +22,7 @@ setSearchQuery(``);
 };
 
 const handleChangeName =e=>{
-    setSearchQuery(e.currentTarget.value.toLowerCase())
+    setSearchQuery(e.currentTarget.value.toLowerCase());
 };
 
 
