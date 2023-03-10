@@ -29,19 +29,23 @@ export default function App () {
         setIsLoading(true);
         const response = getPictures(searchQuery, page);
         response.then(data => {
-          data.data.hits.length === 0
-            ? toast.error('Nothing found')
-            : data.data.hits.forEach(({ id, webformatURL, largeImageURL }) => {
-                !images.some(image => image.id === id) &&
-                  setImages(i => [...i, { id, webformatURL, largeImageURL }]);
-              });
-          setIsLoading(false);
+          if(data.data.hits.length === 0){
+             toast.error('Nothing found');
+             return;
+          }
+          const NewImages = data.data.hits.map(({id,webformatURL,largeImageURL})=>(
+          {id, webformatURL,largeImageURL}
+          ));
+          setImages(i=>[...i,...NewImages,]);
+          
         });
       } catch (error) {
         setError(error);
         setIsLoading(false);
+      } finally{
+        setIsLoading(false);
       }
-    }, [page, searchQuery, images]);
+    }, [page, searchQuery]);
   
 
 
